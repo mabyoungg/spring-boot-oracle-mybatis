@@ -1,6 +1,15 @@
+server:
+  servlet:
+    jsp:
+      init-parameters:
+        development: true
 spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:xe
     driver-class-name: oracle.jdbc.driver.OracleDriver
     username: test
     password: testpass
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
