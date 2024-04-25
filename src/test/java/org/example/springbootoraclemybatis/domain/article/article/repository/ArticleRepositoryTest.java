@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,5 +24,22 @@ public class ArticleRepositoryTest {
         Optional<Article> articleOp = articleRepository.findFirstByOrderByIdDesc();
 
         assertThat(articleOp.isPresent()).isTrue();
+    }
+
+    @DisplayName("findTop3ByOrderByIdDesc")
+    @Test
+    void t2() {
+        List<Article> articles = articleRepository.findTop3ByOrderByIdDesc();
+
+        Article latestArticle = articleRepository.findFirstByOrderByIdDesc().get();
+
+        long idLast = latestArticle.getId();
+        long idSecondLast = idLast - 1;
+        long idThirdLast = idLast - 2;
+
+        assertThat(articles)
+                .hasSize(3)
+                .extracting(Article::getId)
+                .containsExactly(idLast, idSecondLast, idThirdLast);
     }
 }
