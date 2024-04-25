@@ -4,6 +4,8 @@ server:
       init-parameters:
         development: true
 spring:
+  profiles:
+    active: dev
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:xe
     driver-class-name: oracle.jdbc.driver.OracleDriver
