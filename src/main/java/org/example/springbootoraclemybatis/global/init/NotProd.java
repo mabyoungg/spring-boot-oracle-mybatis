@@ -2,7 +2,7 @@ package org.example.springbootoraclemybatis.global.init;
 
 import lombok.RequiredArgsConstructor;
 import org.example.springbootoraclemybatis.domain.article.article.entity.Article;
-import org.example.springbootoraclemybatis.domain.article.article.repository.ArticleMapper;
+import org.example.springbootoraclemybatis.domain.article.article.mapper.ArticleMapper;
 import org.example.springbootoraclemybatis.domain.article.article.service.ArticleService;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;

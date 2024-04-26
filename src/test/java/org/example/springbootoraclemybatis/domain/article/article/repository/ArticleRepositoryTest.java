@@ -5,8 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +46,24 @@ public class ArticleRepositoryTest {
                 .hasSize(3)
                 .extracting(Article::getId)
                 .containsExactly(idLast, idSecondLast, idThirdLast);
+    }
+
+    @DisplayName("search")
+    @Test
+    void t3() {
+        int page = 1;
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page - 1, 10, Sort.by(sorts));
+
+        Page<Article> articlePage = articleRepository.search(
+                List.of("title", "content"),
+                "제목",
+                pageable
+        );
+
+        assertThat(articlePage.getContent())
+                .extracting(Article::getTitle)
+                .containsSubsequence("제목 4", "제목 3", "제목 2", "제목 1");
     }
 }
